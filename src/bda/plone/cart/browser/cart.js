@@ -383,6 +383,72 @@
                 });
             });
         });
+        $('.buy_now_item', context).each(function() {
+            $(this).unbind('click');
+            $(this).bind('click', function(e) {
+                e.preventDefault();
+                var defs;
+                try {
+                    defs = cart.extract(this);
+                } catch (ex) {
+                    bdajax.error(ex.message);
+                    return;
+                }
+                var uid = defs[0];
+                var count = defs[1];
+                if (count > 0) {
+                    var items = cart.items();
+                    for (var item in items) {
+                        if (!item) {
+                            continue;
+                        }
+                        if (item == uid + ';' + defs[2]) {
+                            continue;
+                        }
+                        var item_uid = item.split(';')[0];
+                        if (uid == item_uid) {
+                            count += items[item];
+                        }
+                    }
+                }
+                var params = {
+                    uid: defs[0],
+                    count: count + ''
+                };
+                if (CART_EXECUTION_CONTEXT) {
+                    params.execution_context = CART_EXECUTION_CONTEXT;
+                }
+                var elem = $(this);
+                var status_message = elem.hasClass('show_status_message');
+                bdajax.request({
+                    url: 'validate_cart_item',
+                    params: params,
+                    type: 'json',
+                    success: function(data) {
+                        if (data.success == false) {
+                            bdajax.info(decodeURIComponent(data.error));
+                            if (data.update) {
+                                cart.query();
+                            }
+                        } else {
+                            cart.set(defs[0], defs[1], defs[2]);
+                            var evt = $.Event('cart_modified');
+                            evt.uid = defs[0];
+                            evt.count = count;
+                            $('*').trigger(evt);
+                            if (status_message && defs[1] == 0) {
+                                cart.status_message(
+                                    elem, cart.messages['cart_item_removed']);
+                            } else if (status_message && defs[1] != 0) {
+                                cart.status_message(
+                                    elem, cart.messages['cart_item_updated']);
+                                alert('Updated!');
+                            }
+                        }
+                    }
+                });
+            });
+        });
     }
 
     Cart.prototype.round = function(x) {
