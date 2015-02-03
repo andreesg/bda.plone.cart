@@ -383,6 +383,7 @@
                 });
             });
         });
+
         $('.buy_now_item', context).each(function() {
             $(this).unbind('click');
             $(this).bind('click', function(e) {
@@ -440,9 +441,10 @@
                                 cart.status_message(
                                     elem, cart.messages['cart_item_removed']);
                             } else if (status_message && defs[1] != 0) {
+                                document.location.href = "./@@cart"
+                                /*
                                 cart.status_message(
-                                    elem, cart.messages['cart_item_updated']);
-                                alert('Updated!');
+                                    elem, cart.messages['cart_item_updated']);*/
                             }
                         }
                     }
