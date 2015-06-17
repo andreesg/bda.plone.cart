@@ -1,6 +1,6 @@
 <div id="cart"
      i18n:domain="bda.plone.cart">
-
+    
   <span style="display:none;"
         class="cart_execution_context">summary</span>
 

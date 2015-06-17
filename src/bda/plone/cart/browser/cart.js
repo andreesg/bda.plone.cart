@@ -395,6 +395,7 @@
                     bdajax.error(ex.message);
                     return;
                 }
+
                 var uid = defs[0];
                 var count = defs[1];
                 if (count > 0) {
@@ -421,6 +422,7 @@
                 }
                 var elem = $(this);
                 var status_message = elem.hasClass('show_status_message');
+
                 bdajax.request({
                     url: 'validate_cart_item',
                     params: params,
@@ -437,11 +439,14 @@
                             evt.uid = defs[0];
                             evt.count = count;
                             $('*').trigger(evt);
+
                             if (status_message && defs[1] == 0) {
-                                cart.status_message(
-                                    elem, cart.messages['cart_item_removed']);
+                                if (!$("body").hasClass("template-tickets_view")) {
+                                    cart.status_message(
+                                        elem, cart.messages['cart_item_removed']);
+                                }
                             } else if (status_message && defs[1] != 0) {
-                                document.location.href = "./@@cart"
+                                //document.location.href = "./@@checkout"
                                 /*
                                 cart.status_message(
                                     elem, cart.messages['cart_item_updated']);*/
@@ -449,6 +454,91 @@
                         }
                     }
                 });
+
+                /* Tickets view */
+                var can_checkout = false;
+                var is_last = false;
+
+                if ($("body").hasClass("template-tickets_view")) {
+                    var len = $("div.cart_item").length
+                    $("div.cart_item").each(function(index, elem) {
+                        
+                        if (index == len - 1) {
+                            is_last = true;
+                        }
+
+                        var defs = cart.extract($(this));
+
+                        var uid = defs[0];
+                        var count = defs[1];
+                        if (count > 0) {
+                            var items = cart.items();
+                            for (var item in items) {
+                                if (!item) {
+                                    continue;
+                                }
+                                if (item == uid + ';' + defs[2]) {
+                                    continue;
+                                }
+                                var item_uid = item.split(';')[0];
+                                if (uid == item_uid) {
+                                    count += items[item];
+                                }
+                            }
+                        }
+                        var params = {
+                            uid: defs[0],
+                            count: count + ''
+                        };
+                        if (CART_EXECUTION_CONTEXT) {
+                            params.execution_context = CART_EXECUTION_CONTEXT;
+                        }
+                        var elem = $(this);
+                        var status_message = elem.hasClass('cart_item');
+
+                        bdajax.request({
+                            url: 'validate_cart_item',
+                            params: params,
+                            type: 'json',
+                            success: function(data) {
+                                var curr_defs = defs;
+
+                                if (data.success == false) {
+                                    bdajax.info(decodeURIComponent(data.error));
+                                    if (data.update) {
+                                        cart.query();
+                                    }
+                                } else {
+                                    console.log(curr_defs);
+                                    cart.set(curr_defs[0], curr_defs[1], curr_defs[2]);
+                                    var evt = $.Event('cart_modified');
+                                    evt.uid = curr_defs[0];
+                                    evt.count = count;
+                                    $('*').trigger(evt);
+
+                                    if (status_message && curr_defs[1] == 0) {
+                                        /*cart.status_message(
+                                            elem, cart.messages['cart_item_removed']);*/
+                                    } else if (status_message && curr_defs[1] != 0) {
+                                        can_checkout = true;
+                                        //document.location.href = "./@@checkout"
+                                        /*
+                                        cart.status_message(
+                                            elem, cart.messages['cart_item_updated']);*/
+                                    }
+
+                                    if (is_last) {
+                                        if (can_checkout) {
+                                            document.location.href = "./@@checkout";
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    });
+                }
+
+                /* Tickets view end */
             });
         });
     }
@@ -461,15 +551,23 @@
 
     Cart.prototype.extract = function(node) {
         node = $(node);
-        var parents = node.parents();
-        var uid = $('.cart_item_uid', parents).first().text();
-        var count_node = $('.cart_item_count', parents).get(0);
+
+        if (!node.hasClass('cart_item')) {
+            var parents = node.parents();
+            var uid = $('.cart_item_uid', parents).first().text();
+            var count_node = $('.cart_item_count', parents).get(0);
+        } else {
+            var uid = node.find('.cart_item_uid').first().text();
+            var count_node = node.find('.cart_item_count').get(0);
+        }
+
         var count;
         if (count_node.tagName.toUpperCase() == 'INPUT') {
             count = $(count_node).val();
         } else {
             count = $(count_node).text();
         }
+
         count = new Number(count);
         if (isNaN(count)) {
             throw {
