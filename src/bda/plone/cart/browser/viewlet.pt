@@ -4,13 +4,14 @@
 
   <p class="hiddenStructure">Cart</p>
 
-  <dt id="cart_viewlet_summery">
+  <dt id="cart_viewlet_summery"
+    >
     <a href="#" 
        title="Cart"
        i18n:attributes="title cart_summary">
       <span i18n:translate="cart">Cart</span>
-      (<span class="cart_total_count"
-             tal:content="view/cart_total_count">0</span>)
+      <!--(<span class="cart_total_count"
+             tal:content="view/cart_total_count">0</span>)-->
     </a>
   </dt>
 

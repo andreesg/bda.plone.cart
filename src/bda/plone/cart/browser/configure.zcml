@@ -73,6 +73,14 @@
 
   <browser:page
     for="*"
+    name="ticket_cart_summary"
+    class=".CartView"
+    template="ticket_summary.pt"
+    permission="zope2.View"
+    layer="..interfaces.ICartExtensionLayer" />
+
+  <browser:page
+    for="*"
     name="cart"
     template="view.pt"
     permission="zope2.View"

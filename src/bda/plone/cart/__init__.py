@@ -23,6 +23,8 @@ from zope.interface import Interface
 from zope.interface import implementer
 from zope.publisher.interfaces.browser import IBrowserRequest
 
+from plonetheme.bootstrapModern.tickets import extractTickets
+
 import urllib2
 import uuid
 
@@ -69,24 +71,32 @@ def deletecookie(request):
     request.response.expireCookie('cart', path='/')
 
 
-def extractitems(items):
+def extractitems(items, request=None):
     """Cart items are stored in a cookie. The format is
     ``uid;comment:count,uid;comment:count,...``.
 
     Return a list of 3-tuples containing ``(uid, count, comment)``.
     """
     if not items:
-        return []
-    ret = list()
-    items = items.split(',')
-    for item in items:
-        if not item:
-            continue
-        item = item.split(':')
-        uid = item[0].split(';')[0]
-        count = item[1]
-        comment = urllib2.unquote(item[0][len(uid) + 1:])
-        ret.append((uid, Decimal(count), comment))
+        items = ""
+
+    if items != "":
+        ret = list()
+        items = items.split(',')
+        for item in items:
+            if not item:
+                continue
+            item = item.split(':')
+            uid = item[0].split(';')[0]
+            count = item[1]
+            comment = urllib2.unquote(item[0][len(uid) + 1:])
+            ret.append((uid, Decimal(count), comment))
+    else:
+        ret = list()
+
+    tickets_ret = extractTickets(ret, request)
+    ret = tickets_ret
+
     return ret
 
 
@@ -103,7 +113,7 @@ def aggregate_cart_item_count(target_uid, items):
 def remove_item_from_cart(request, uid):
     """Remove single item from cart by uid.
     """
-    items = extractitems(readcookie(request))
+    items = extractitems(readcookie(request), request)
     cookie_items = list()
     for item_uid, count, comment in items:
         if uid == item_uid:
@@ -148,7 +158,8 @@ class CartDataProviderBase(object):
         ret['cart_settings']['include_shipping_costs'] = include_shipping_costs
         ret['cart_items'] = list()
         ret['cart_summary'] = dict()
-        items = extractitems(readcookie(self.request))
+        items = extractitems(readcookie(self.request), self.request)
+
         if items:
             net = self.net(items)
             vat = self.vat(items)
@@ -191,7 +202,7 @@ class CartDataProviderBase(object):
     @property
     def total(self):
         total = Decimal(0)
-        items = extractitems(readcookie(self.request))
+        items = extractitems(readcookie(self.request), self.request)
         net = self.net(items)
         vat = self.vat(items)
         cart_discount = self.discount(items)
@@ -231,7 +242,7 @@ class CartDataProviderBase(object):
 
     @property
     def include_shipping_costs(self):
-        items = extractitems(readcookie(self.request))
+        items = extractitems(readcookie(self.request), self.request)
         for item in items:
             if cart_item_shippable(self.context, item):
                 return True
@@ -352,7 +363,8 @@ class CartDataProviderBase(object):
     def item(self, uid, title, count, price, url, comment='', description='',
              comment_required=False, quantity_unit_float=False,
              quantity_unit='', preview_image_url='',
-             no_longer_available=False, alert=''):
+             no_longer_available=False, alert='', original_price=''):
+
         return {
             # placeholders
             'cart_item_uid': uid,
@@ -369,6 +381,7 @@ class CartDataProviderBase(object):
             'comment_required': comment_required,
             'quantity_unit_float': quantity_unit_float,
             'no_longer_available': no_longer_available,
+            'cart_item_original_price': ascur(original_price)
         }
 
 
@@ -428,7 +441,7 @@ class CartItemDataProviderBase(object):
         return True
 
     def discount_net(self, count):
-        if self.discount_enabled:
+        if self.discount_enabled and count != 0:
             discount = queryAdapter(self.context, ICartItemDiscount)
             if discount:
                 return discount.net(self.net, self.vat, count)
@@ -461,7 +474,7 @@ class CartItemAvailabilityBase(object):
         available = self.stock.available
         # reduce available count if item already in cart
         if available is not None:
-            cart_items = extractitems(readcookie(self.request))
+            cart_items = extractitems(readcookie(self.request), self.request)
             item_uid = IUUID(self.context)
             for uid, count, comment in cart_items:
                 if uid == item_uid:
@@ -535,7 +548,7 @@ class CartItemStateBase(object):
 
     @property
     def aggregated_count(self):
-        items = extractitems(readcookie(self.request))
+        items = extractitems(readcookie(self.request), self.request)
         return aggregate_cart_item_count(IUUID(self.context), items)
 
     @property

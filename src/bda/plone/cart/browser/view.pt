@@ -14,9 +14,14 @@
 
     <body>
         <metal:main fill-slot="main">
-            <tal:main-macro metal:define-macro="main">
-                <h1 class="documentFirstHeading" i18n:translate="cart">Cart</h1>
-                <tal:cart replace="structure context/@@cart_summary" />
+            <tal:main-macro metal:define-macro="main"
+              tal:define="tickets python: '/tickets' in context.absolute_url()">
+
+                <h1 class="documentFirstHeading" i18n:translate="cart" tal:condition="not:tickets">Cart</h1>
+                <h1 class="documentFirstHeading" tal:content="context/Title" tal:condition="tickets">Title</h1>
+                
+                <tal:cart replace="structure context/@@cart_summary" tal:condition="not:tickets"/>
+                <tal:ticket_cart replace="structure context/@@ticket_cart_summary" tal:condition="tickets"/>
             </tal:main-macro>
         </metal:main>
     </body>
