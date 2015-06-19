@@ -173,7 +173,8 @@ def render_cart(context):
     if url.endswith('@@cart') \
        or url.find('@@checkout') != -1 \
        or url.find('@@confirm_order') != -1 \
-       or url.find('/portal_factory/') != -1:
+       or url.find('/portal_factory/') != -1 \
+       or url.find('@@tickets') != -1:
         return False
     return True
 
