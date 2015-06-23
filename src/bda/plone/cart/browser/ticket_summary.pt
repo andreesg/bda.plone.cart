@@ -22,9 +22,7 @@
     tal:define="currency view/currency">
     <div class="cart_item summary_item">
       <h3>
-        <a href="#" class="cart_item_location">
           <span class="cart_item_title">Title</span>
-        </a>
       </h3>
       <div class="cart_item_alert" style="display: none;">Alert</div>
       <img class="cart_item_preview_image" src="" />
@@ -96,16 +94,16 @@
     <table class="cart_sum_content"
            tal:define="currency view/currency">
       <tal:details condition="not:view/summary_total_only">
-        <tr>
+        <!--<tr>
           <td i18n:translate="summary_net">Net:</td>
           <td class="cart_net">0.00</td>
           <td tal:content="currency" tal:condition="currency" class="currency">EUR</td>
-        </tr>
-        <tr>
+        </tr>-->
+        <!--<tr>
           <td i18n:translate="summary_vat">VAT.:</td>
           <td class="cart_vat">0.00 <span tal:content="currency" tal:condition="currency">EUR</span></td>
           <td tal:content="currency" tal:condition="currency" class="currency">EUR</td>
-        </tr>
+        </tr>-->
         <tr class="discount" style="display: none;">
           <td i18n:translate="discount_net">Discount Net:</td>
           <td class="discount_net">0.00</td>

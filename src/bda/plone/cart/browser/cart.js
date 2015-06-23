@@ -227,18 +227,6 @@
                 var css = '.' + item;
                 var value = data.cart_summary[item];
                 $(css, cart_summary).html(value);
-
-                if (item == 'cart_total') {
-                    if (value > 0) {
-                        if ($('.cart_checkout_button').hasClass('disabled')) {
-                            $('.cart_checkout_button').removeClass('disabled');
-                        }
-                    } else {
-                        if (!$('.cart_checkout_button').hasClass('disabled')) {
-                            $('.cart_checkout_button').addClass('disabled');
-                        }
-                    }
-                }
             }
             if (data.cart_summary.discount_total_raw > 0) {
                 $('.discount', this.cart_node).css('display', 'table-row');
@@ -252,6 +240,16 @@
             }
             $('#cart_summary', this.cart_node).css('display', 'block');
             $('.cart_total_count').html(cart_total_count);
+
+            if (cart_total_count > 0) {
+                if ($('.cart_checkout_button').hasClass('disabled')) {
+                    $('.cart_checkout_button').removeClass('disabled');
+                }
+            } else {
+                if (!$('.cart_checkout_button').hasClass('disabled')) {
+                    $('.cart_checkout_button').addClass('disabled');
+                }
+            }
 
             if (render_no_longer_available) {
                 this.no_longer_available = true;
