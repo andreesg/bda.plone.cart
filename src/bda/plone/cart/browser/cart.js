@@ -728,7 +728,6 @@
             params: params,
             type: 'json',
             success: function(data) {
-                console.log(data);
                  cart.render(data);
                  cart.bind();
             }

@@ -153,7 +153,43 @@ msgstr "BTW"
 msgid "trying_to_add_more_items_than_available"
 msgstr "Het gewenste aantal is niet beschikbaar"
 
-#. Default: "Update cart"
 #: browser/summary.pt:27 browser/tile.pt:22
 msgid "update_cart"
 msgstr "Winkelwagen bijwerken"
+
+#: browser/ticket_summary.pt
+msgid "Ticket type"
+msgstr "Type ticket"
+
+#: browser/ticket_summary.pt
+msgid "Price"
+msgstr "Prijs"
+
+#: browser/ticket_summary.pt
+msgid "Amount"
+msgstr "Aantal"
+
+#: browser/ticket_summary.pt
+msgid "Subtotal"
+msgstr "Subtotaal"
+
+#: browser/ticket_summary.pt
+msgid "Subtotal"
+msgstr "Subtotaal"
+
+#: browser/ticket_summary.pt
+msgid "2. Person details"
+msgstr "2. Persoonsgegevens"
+
+#: browser/ticket_summary.pt
+msgid "3. Verify details"
+msgstr "3. Gegevens controleren"
+
+#: browser/ticket_summary.pt
+msgid "4. Payment"
+msgstr "4. Betalen"
+
+
+
+
+
