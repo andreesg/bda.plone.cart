@@ -109,9 +109,51 @@ class CartMixin(DataProviderMixin):
     def show_checkout(self):
         return self.data_provider.show_checkout
 
-
 class CartView(BrowserView, DataProviderMixin):
     # XXX: rename to CartSummary
+
+    def get_pre_cart(self, is_ticket):
+        if is_ticket:
+            folder = self.context
+            if folder.portal_type == "Folder":
+                contents = folder.getFolderContents({"portal_type": "Document", "Title":"pre-cart"})
+                if len(contents) > 0:
+                    pre_cart = contents[0]
+                    pre_cart_page = pre_cart.getObject()
+                    if hasattr(pre_cart_page, "text"):
+                        return pre_cart_page.text
+
+            return False
+        else:
+            return False
+
+    def get_post_cart(self, is_ticket):
+        if is_ticket:
+            folder = self.context
+            if folder.portal_type == "Folder":
+                contents = folder.getFolderContents({"portal_type": "Document", "Title":"post-cart"})
+                if len(contents) > 0:
+                    post_cart = contents[0]
+                    post_cart_page = post_cart.getObject()
+                    if hasattr(post_cart_page, "text"):
+                        return post_cart_page.text
+
+            return False
+        else:
+            return False
+
+    def get_tickets_header(self, is_ticket):
+        if is_ticket:
+            folder = self.context
+            if folder.portal_type == "Folder":
+                contents = folder.getFolderContents({"portal_type": "Image", "Title":"tickets-header"})
+                if len(contents) > 0:
+                    image = contents[0]
+                    url = image.getURL()
+                    scale_url = "%s/%s" %(url, "@@images/image/large")
+                    return scale_url
+        else:
+            return False
 
     @property
     def disable_max_article(self):

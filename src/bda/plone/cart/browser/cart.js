@@ -132,7 +132,7 @@
             $(CART_VIEWLET_IDENTIFYER).css('display', 'block');
             $('#cart_no_items', this.cart_node).css('display', 'none');
             $('#cart_items', this.cart_node).empty();
-            $('#cart_items', this.cart_node).css('display', 'block');
+            $('#cart_items', this.cart_node).css('display', 'table-row-group');
             var render_no_longer_available = false;
             var cart_total_count = 0;
 
@@ -154,6 +154,9 @@
                         .css('background-color', 'red');
                     render_no_longer_available = true;
                 }
+
+
+
                 for (var item in cart_item_data) {
                     var attribute = '';
                     var css = '.' + item;
@@ -179,10 +182,18 @@
                         }
                         cart_total_count += value;
                     }
+
+                    if (item == "cart_item_title") {
+                        if (value == "Groepen (v.a.10 personen)") {
+                            $("select", cart_item).html("<option value='0'>0</option><option value='10'>10</option><option value='11'>11</option><option value='12'>12</option><option value='13'>13</option><option value='14'>14</option><option value='15'>15</option>");
+                        }
+                    }
+
+
                     var placeholder = $(css, cart_item);
 
-                    
                     $(placeholder).each(function(e) {
+
                         // case set attribute of element
                         if (attribute != '') {
                             $(this).attr(attribute, value);

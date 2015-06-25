@@ -179,7 +179,7 @@ msgstr "Subtotaal"
 
 #: browser/ticket_summary.pt
 msgid "2. Person details"
-msgstr "2. Persoonsgegevens"
+msgstr "2. Gegevens"
 
 #: browser/ticket_summary.pt
 msgid "3. Verify details"

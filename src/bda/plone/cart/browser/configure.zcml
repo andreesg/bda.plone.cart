@@ -84,6 +84,7 @@
     name="cart"
     template="view.pt"
     permission="zope2.View"
+    class=".CartView"
     layer="..interfaces.ICartExtensionLayer" />
 
 </configure>
