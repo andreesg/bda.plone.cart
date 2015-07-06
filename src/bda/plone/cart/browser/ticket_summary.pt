@@ -34,7 +34,7 @@
       <tr class="cart-header">
         <th i18n:translate="">Ticket type</th>
         <th i18n:translate="">Price</th>
-        <th i18n:translate="">Amount</th>
+        <th i18n:translate="" class="quantity-th">Amount</th>
         <th i18n:translate="" class="subtotal-th">Subtotal</th>
       </tr>
     </thead>
@@ -47,7 +47,7 @@
         <span tal:content="currency">EUR</span><span class="cart_item_original_price">€ 17.50</span>
       </span>
     </td>
-    <td>
+    <td class="quantity-col">
       <span class="cart_item_uid" style="display: none;">uid</span>
       <div class="cart-select-box">
         <select class="select form-control cart_item_count cart_tickets">
@@ -88,7 +88,7 @@
         <tr class="cart-header">
           <th i18n:translate="">Ticket type</th>
           <th i18n:translate="">Price</th>
-          <th i18n:translate="">Amount</th>
+          <th i18n:translate="" class="quantity-th">Amount</th>
           <th i18n:translate="" class="subtotal-th">Subtotal</th>
         </tr>
       </thead>

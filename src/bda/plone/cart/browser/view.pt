@@ -18,10 +18,10 @@
               tal:define="tickets python: '/tickets' in context.absolute_url();
                           tickets_header python: view.get_tickets_header(tickets);">
                 
-                <h1 class="documentFirstHeading" i18n:translate="cart" tal:condition="not:tickets">Cart</h1>
 
-                <div id="cart-page-header" tal:condition="tickets" tal:attributes="style python: 'background-image:url(%s)' %(tickets_header)">
+                <div id="cart-page-header" tal:attributes="style python: 'background-image:url(%s)' %(tickets_header)">
                   <h1 class="documentFirstHeading" tal:content="context/Title" tal:condition="tickets">Title</h1>
+                  <h1 class="documentFirstHeading" i18n:translate="cart" tal:condition="not:tickets">Cart</h1>
                 </div>
 
                 <tal:cart replace="structure context/@@cart_summary" tal:condition="not:tickets"/>
