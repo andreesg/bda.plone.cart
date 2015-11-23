@@ -143,6 +143,13 @@ msgstr "Verzendkosten"
 msgid "summary_total"
 msgstr "Totaal"
 
+
+#. Default: "Total:"
+#: browser/summary.pt:100 browser/tile.pt:95
+msgid "total_label"
+msgstr "Totaalprijs"
+
+
 #. Default: "VAT.:"
 #: browser/summary.pt:68 browser/tile.pt:65
 msgid "summary_vat"

@@ -1,8 +1,28 @@
 <div id="cart"
-     i18n:domain="bda.plone.cart">
+     i18n:domain="bda.plone.cart" class="first-cart">
+
+
+  <div class="tickets-breadcrumbs shop">
+      <a href=""
+       class="btn step step-1 selected" type="button" i18n:translate="">1. Winkelwagen</a>
+
+      <a href=""
+       class="btn disabled step step-2" type="button" i18n:translate="">2. Person details</a>
+
+      <a href=""
+       class="btn disabled step step-3" type="button" i18n:translate="">3. Verify details</a>
+
+      <a href=""
+       class="btn disabled step step-4" type="button" i18n:translate="">4. Payment</a>
+  </div>
     
   <span style="display:none;"
         class="cart_execution_context">summary</span>
+
+  <div class="table-inner-wrapper">
+    <h2 style="text-align:left;font-size: 1.500em;padding-bottom:20px;padding-top:60px;">Artikelen in uw winkelwagen</h2>
+    <p style="padding-bottom:20px;">Hieronder kunt u alle artikelen vinden die u geselecteerd heeft</p>
+  </div>
 
   <span id="cart_item_template" style="display:none"
   tal:define="currency view/currency">
@@ -18,13 +38,13 @@
   <tbody>
   
   <tr class="cart_item summary_item cart_item_content">
-    <td><h4><span class="cart_item_title">Entree volwassene</span></h4></td>
+    <td style="width:50%;"><h4><span class="cart_item_title">Entree volwassene</span></h4></td>
     <td>
       <span class="price original">
         <span tal:content="currency">EUR</span><span class="cart_item_original_price">€ 17.50</span>
       </span>
     </td>
-    <td class="quantity-col">
+    <td class="quantity-col" style="width: 10%;">
       <span class="cart_item_uid" style="display: none;">uid</span>
       <div class="cart-select-box">
         <select class="select form-control cart_item_count cart_tickets">
@@ -59,78 +79,91 @@
 </table>
 </span>
   
-  <div class="table-responsive">
-    <table>
-      <thead>
-        <tr class="cart-header">
-          <th i18n:translate="">Omschrijving</th>
-          <th i18n:translate="">Price</th>
-          <th i18n:translate="" class="quantity-th">Amount</th>
-          <th i18n:translate="" class="subtotal-th">Subtotal</th>
-        </tr>
-      </thead>
-      <tbody id="cart_items" style="display:none">
-      </tbody>
-    </table>
+  <div class="table-responsive table_wrapper">
+    <div class="table-inner-wrapper">
+      <table>
+        <thead>
+          <tr class="cart-header">
+            <th i18n:translate="">Omschrijving</th>
+            <th i18n:translate="">Price</th>
+            <th i18n:translate="" class="quantity-th">Amount</th>
+            <th i18n:translate="" class="subtotal-th">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody id="cart_items" style="display:none">
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <div id="cart_no_items" style="display: none;">
     <p i18n:translate="empty_cart">Cart is empty</p>
   </div>
 
+
+
   <div id="cart_summary" style="display: none;" class="summary_wrapper">
+    <div class="visualClear"></div>
+  
+    <div style="padding-top:70px;" class="shipping_costs_table">
+    
+    <div class="table-inner-wrapper">
+    <h2 style="text-align:left;font-size: 1.250em; padding-bottom:30px;">Overige kosten</h2>
+    </div>
+
+    <div class="table_wrapper">
+    <div class="table-inner-wrapper">
+      <table>
+
+        <thead>
+          <tr class="cart-header">
+            <th i18n:translate="">Omschrijving</th>
+            <th i18n:translate="">Price</th>
+            <th i18n:translate="" class="subtotal-th">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr class="cart_item summary_item cart_item_content">
+              <td style="width:50%;"><span class="shipping_label" style="font-size:1em;"></span> <span class="shipping_description" style="font-size:1em;">Shipping</span></td>
+              <td>
+                <span class="price original">
+                  <span>€ </span><span class="shipping_total">€ 17.50</span>
+                </span>
+              </td>
+
+              <td class="subtotal-col">
+                <span>€ </span><span class="shipping_total">Price</span>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+    <div class="visualClear"></div>
+
+    <div class="table-inner-wrapper">
     <table class="cart_sum_content"
            tal:define="currency view/currency">
       <tal:details condition="not:view/summary_total_only">
-        <tr>
-          <td i18n:translate="summary_net">Net:</td>
-          <td class="cart_net">0.00</td>
-          <td tal:content="currency" tal:condition="currency">EUR</td>
-        </tr>
-        <tr>
-          <td i18n:translate="summary_vat">VAT.:</td>
-          <td class="cart_vat">0.00</td>
-          <td tal:content="currency" tal:condition="currency">EUR</td>
-        </tr>
-        <tr class="discount" style="display: none;">
-          <td i18n:translate="discount_net">Discount Net:</td>
-          <td class="discount_net">0.00</td>
-          <td tal:content="currency" tal:condition="currency">EUR</td>
-        </tr>
-        <tr class="discount" style="display: none;">
-          <td i18n:translate="discount_vat">Discount VAT.:</td>
-          <td class="discount_vat">0.00</td>
-          <td tal:content="currency" tal:condition="currency">EUR</td>
-        </tr>
       </tal:details>
-      <tr class="discount" style="display: none;">
-        <td><strong i18n:translate="discount_total">Discount Total:</strong></td>
-        <td><strong class="discount_total">Total</strong></td>
-        <td tal:condition="currency">
-          <strong tal:content="currency">EUR</strong>
-        </td>
-      </tr>
-      <tr class="shipping" style="display: none;">
-        <td>
-          <span i18n:translate="summary_shipping">Shipping</span>:
-          <span class="shipping_label"></span>
-          <span class="shipping_description"></span>:
-        </td>
-        <td class="shipping_total">0.00</td>
-        <td tal:content="currency" tal:condition="currency">EUR</td>
-      </tr>
-      <tr>
-        <td><strong i18n:translate="summary_total">Total:</strong></td>
-        <td><strong class="cart_total">Total</strong></td>
-        <td tal:condition="currency">
-          <strong tal:content="currency">EUR</strong>
-        </td>
-      </tr>
     </table>
-    <div class="visualClear"></div>
-  </div>
 
-  <div class="cart_summary_buttons">
+    <div class="total-price-wrapper" style="padding-top:50px;text-align:left;" tal:define="currency view/currency">
+      <h2 style="font-size:1.500em; padding-bottom:15px;" i18n:translate="total_label">Totaalprijs</h2>
+      <p style="font-size:1.500em; font-weight:700; color:#666666;">
+        <span tal:content="currency"></span><span class="cart_total" ></span>
+      </p>
+    </div>
+ 
+    <div class="visualClear"></div>
+
+  </div>
+  </div>
+</div>
+  
+
+  <div class="cart_summary_buttons table-inner-wrapper">
     <a href="javascript:history.back()" class="cart_back"
        i18n:translate="back">back</a>
     <a href="@@checkout"
