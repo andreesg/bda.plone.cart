@@ -1,5 +1,6 @@
 <div id="cart"
-     i18n:domain="bda.plone.cart" class="first-cart">
+     i18n:domain="bda.plone.cart" class="first-cart"
+     tal:define="shop_pre_cart_text python: view.get_shop_pre_cart();">
 
 
   <div class="tickets-breadcrumbs shop">
@@ -19,10 +20,12 @@
   <span style="display:none;"
         class="cart_execution_context">summary</span>
 
-  <div class="table-inner-wrapper">
-    <h2 style="text-align:left;font-size: 1.500em;padding-bottom:20px;padding-top:60px;">Artikelen in uw winkelwagen</h2>
-    <p style="padding-bottom:20px;">Hieronder kunt u alle artikelen vinden die u geselecteerd heeft</p>
+  <tal:pre_cart tal:condition="shop_pre_cart_text">
+  <div class="table-inner-wrapper" tal:content="structure python: shop_pre_cart_text.output_relative_to(context.view)">
+    <h2 class="pre-cart-text">Artikelen in uw winkelwagen</h2>
+    <p class="pre-cart-p">Hieronder kunt u alle artikelen vinden die u geselecteerd heeft</p>
   </div>
+  </tal:pre_cart>
 
   <span id="cart_item_template" style="display:none"
   tal:define="currency view/currency">
@@ -38,13 +41,13 @@
   <tbody>
   
   <tr class="cart_item summary_item cart_item_content">
-    <td style="width:50%;"><h4><span class="cart_item_title">Entree volwassene</span></h4></td>
+    <td class="cart-title-col"><h4><span class="cart_item_title">Entree volwassene</span></h4></td>
     <td>
       <span class="price original">
         <span tal:content="currency">EUR</span><span class="cart_item_original_price">€ 17.50</span>
       </span>
     </td>
-    <td class="quantity-col" style="width: 10%;">
+    <td class="quantity-col">
       <span class="cart_item_uid" style="display: none;">uid</span>
       <div class="cart-select-box">
         <select class="select form-control cart_item_count cart_tickets">
@@ -96,7 +99,7 @@
     </div>
   </div>
 
-  <div id="cart_no_items" style="display: none;">
+  <div id="cart_no_items" class="table-inner-wrapper" style="display: none;" style="background:#f5f5f5;">
     <p i18n:translate="empty_cart">Cart is empty</p>
   </div>
 
@@ -105,10 +108,10 @@
   <div id="cart_summary" style="display: none;" class="summary_wrapper">
     <div class="visualClear"></div>
   
-    <div style="padding-top:70px;" class="shipping_costs_table">
+    <div class="shipping_costs_table">
     
     <div class="table-inner-wrapper">
-    <h2 style="text-align:left;font-size: 1.250em; padding-bottom:30px;">Overige kosten</h2>
+      <h2 class="post-cart-title">Overige kosten</h2>
     </div>
 
     <div class="table_wrapper">
@@ -124,7 +127,7 @@
         </thead>
         <tbody>
             <tr class="cart_item summary_item cart_item_content">
-              <td style="width:50%;"><span class="shipping_label" style="font-size:1em;"></span> <span class="shipping_description" style="font-size:1em;">Shipping</span></td>
+              <td class="shipping-col"><span class="shipping_label"></span> <span class="shipping_description">Shipping</span></td>
               <td>
                 <span class="price original">
                   <span>€ </span><span class="shipping_total">€ 17.50</span>
@@ -149,9 +152,9 @@
       </tal:details>
     </table>
 
-    <div class="total-price-wrapper" style="padding-top:50px;text-align:left;" tal:define="currency view/currency">
-      <h2 style="font-size:1.500em; padding-bottom:15px;" i18n:translate="total_label">Totaalprijs</h2>
-      <p style="font-size:1.500em; font-weight:700; color:#666666;">
+    <div class="total-price-wrapper" tal:define="currency view/currency">
+      <h2 class="total-price-label" i18n:translate="total_label">Totaalprijs</h2>
+      <p class="total_price-price">
         <span tal:content="currency"></span><span class="cart_total" ></span>
       </p>
     </div>
