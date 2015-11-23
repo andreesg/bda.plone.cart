@@ -9,7 +9,7 @@
   <table>
     <thead>
       <tr class="cart-header">
-        <th i18n:translate="">Ticket type</th>
+        <th i18n:translate="">Omschrijving</th>
         <th i18n:translate="">Price</th>
         <th i18n:translate="" class="quantity-th">Amount</th>
         <th i18n:translate="" class="subtotal-th">Subtotal</th>
@@ -63,7 +63,7 @@
     <table>
       <thead>
         <tr class="cart-header">
-          <th i18n:translate="">Ticket type</th>
+          <th i18n:translate="">Omschrijving</th>
           <th i18n:translate="">Price</th>
           <th i18n:translate="" class="quantity-th">Amount</th>
           <th i18n:translate="" class="subtotal-th">Subtotal</th>
