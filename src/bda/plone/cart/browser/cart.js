@@ -418,7 +418,7 @@
             });
         });
 
-        $('select.cart_item_count', context).each(function() {
+        $('select.cart_item_count:not(.buyable-count)', context).each(function() {
             $(this).unbind('change');
             $(this).bind('change', function(e) {
                 e.preventDefault();
