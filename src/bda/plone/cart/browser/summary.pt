@@ -121,14 +121,14 @@
         <thead>
           <tr class="cart-header">
             <th i18n:translate="">Omschrijving</th>
-            <th i18n:translate="">Price</th>
+            <th i18n:translate="" class="price-th">Price</th>
             <th i18n:translate="" class="subtotal-th">Subtotal</th>
           </tr>
         </thead>
         <tbody>
             <tr class="cart_item summary_item cart_item_content">
               <td class="shipping-col"><span class="shipping_label"></span> <span class="shipping_description">Shipping</span></td>
-              <td>
+              <td class="price-col">
                 <span class="price original">
                   <span>€ </span><span class="shipping_total">€ 17.50</span>
                 </span>
