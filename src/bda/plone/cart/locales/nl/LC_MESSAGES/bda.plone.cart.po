@@ -31,7 +31,7 @@ msgstr "Het artikel limit is bereikt"
 
 #: browser/summary.pt:111
 msgid "back"
-msgstr "Terug"
+msgstr "Verder winkelen"
 
 #. Default: "Cart"
 #: browser/__init__.py:168 browser/portlet.pt:8 browser/view.pt:18
