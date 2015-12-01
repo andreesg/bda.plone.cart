@@ -31,7 +31,7 @@ msgstr "Het artikel limit is bereikt"
 
 #: browser/summary.pt:111
 msgid "back"
-msgstr "Verder winkelen"
+msgstr "Terug"
 
 #. Default: "Cart"
 #: browser/__init__.py:168 browser/portlet.pt:8 browser/view.pt:18
@@ -153,7 +153,7 @@ msgstr "Totaalprijs"
 #. Default: "VAT.:"
 #: browser/summary.pt:68 browser/tile.pt:65
 msgid "summary_vat"
-msgstr "BTW"
+msgstr "incl BTW"
 
 #. Default: "Not enough items available, abort."
 #: __init__.py:301
