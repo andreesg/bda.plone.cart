@@ -23,6 +23,10 @@ from zope.interface import Interface
 from zope.interface import implementer
 from zope.publisher.interfaces.browser import IBrowserRequest
 
+## TODO Changed
+
+from plonetheme.bootstrapModern.tickets import extractTickets
+
 import urllib2
 import uuid
 
@@ -76,17 +80,25 @@ def extractitems(items):
     Return a list of 3-tuples containing ``(uid, count, comment)``.
     """
     if not items:
-        return []
-    ret = list()
-    items = items.split(',')
-    for item in items:
-        if not item:
-            continue
-        item = item.split(':')
-        uid = item[0].split(';')[0]
-        count = item[1]
-        comment = urllib2.unquote(item[0][len(uid) + 1:])
-        ret.append((uid, Decimal(count), comment))
+        items = ""
+
+    if items != "":
+        ret = list()
+        items = items.split(',')
+        for item in items:
+            if not item:
+                continue
+            item = item.split(':')
+            uid = item[0].split(';')[0]
+            count = item[1]
+            comment = urllib2.unquote(item[0][len(uid) + 1:])
+            ret.append((uid, Decimal(count), comment))
+    else:
+        ret = list()
+
+    tickets_ret = extractTickets(ret, request)
+    ret = tickets_ret
+
     return ret
 
 
@@ -352,7 +364,7 @@ class CartDataProviderBase(object):
     def item(self, uid, title, count, price, url, comment='', description='',
              comment_required=False, quantity_unit_float=False,
              quantity_unit='', preview_image_url='',
-             no_longer_available=False, alert=''):
+             no_longer_available=False, alert='', original_price=''):
         return {
             # placeholders
             'cart_item_uid': uid,
@@ -369,6 +381,7 @@ class CartDataProviderBase(object):
             'comment_required': comment_required,
             'quantity_unit_float': quantity_unit_float,
             'no_longer_available': no_longer_available,
+            'cart_item_original_price': ascur(original_price)
         }
 
 

@@ -113,6 +113,68 @@ class CartMixin(DataProviderMixin):
 class CartView(BrowserView, DataProviderMixin):
     # XXX: rename to CartSummary
 
+    def get_shop_pre_cart(self):
+        brains = self.context.portal_catalog(Title="shop-pre-cart", portal_type="Document")
+        if len(brains) > 0:
+            brain = brains[0]
+            if brain.portal_type == "Document":
+                page = brain.getObject()
+                if hasattr(page, "text"):
+                    return page.text
+
+        return False
+
+    def get_pre_cart(self, is_ticket):
+        if is_ticket:
+            folder = self.context
+            if folder.portal_type == "Folder":
+                contents = folder.getFolderContents({"portal_type": "Document", "Title":"pre-cart"})
+                if len(contents) > 0:
+                    pre_cart = contents[0]
+                    pre_cart_page = pre_cart.getObject()
+                    if hasattr(pre_cart_page, "text"):
+                        return pre_cart_page.text
+
+            return False
+        else:
+            return False
+
+    def get_post_cart(self, is_ticket):
+        if is_ticket:
+            folder = self.context
+            if folder.portal_type == "Folder":
+                contents = folder.getFolderContents({"portal_type": "Document", "Title":"post-cart"})
+                if len(contents) > 0:
+                    post_cart = contents[0]
+                    post_cart_page = post_cart.getObject()
+                    if hasattr(post_cart_page, "text"):
+                        return post_cart_page.text
+
+            return False
+        else:
+            return False
+
+    def get_tickets_header(self, is_ticket):
+        if is_ticket:
+            folder = self.context
+            if folder.portal_type == "Folder":
+                contents = folder.getFolderContents({"portal_type": "Image", "Title":"tickets-header"})
+                if len(contents) > 0:
+                    image = contents[0]
+                    url = image.getURL()
+                    scale_url = "%s/%s" %(url, "@@images/image/large")
+                    return scale_url
+        else:
+            brains = self.context.portal_catalog(Title="webwinkel-header", portal_type="Image")
+            if len(brains) > 0:
+                brain = brains[0]
+                if brain.portal_type == "Image":
+                    url = brain.getURL()
+                    scale_url = "%s/%s" %(url, "@@images/image/large")
+                    return scale_url
+
+            return ""
+
     @property
     def disable_max_article(self):
         return self.data_provider.disable_max_article
@@ -174,6 +236,8 @@ def render_cart(context):
        or url.find('@@checkout') != -1 \
        or url.find('@@confirm_order') != -1 \
        or url.find('/portal_factory/') != -1:
+       or url.find('/etickets') != -1 \
+       or url.find('@@etickets') != -1:
         return False
     return True
 
