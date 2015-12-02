@@ -73,7 +73,7 @@ def deletecookie(request):
     request.response.expireCookie('cart', path='/')
 
 
-def extractitems(items):
+def extractitems(items, request=None):
     """Cart items are stored in a cookie. The format is
     ``uid;comment:count,uid;comment:count,...``.
 
@@ -115,7 +115,7 @@ def aggregate_cart_item_count(target_uid, items):
 def remove_item_from_cart(request, uid):
     """Remove single item from cart by uid.
     """
-    items = extractitems(readcookie(request))
+    items = extractitems(readcookie(request), request)
     cookie_items = list()
     for item_uid, count, comment in items:
         if uid == item_uid:
@@ -160,7 +160,7 @@ class CartDataProviderBase(object):
         ret['cart_settings']['include_shipping_costs'] = include_shipping_costs
         ret['cart_items'] = list()
         ret['cart_summary'] = dict()
-        items = extractitems(readcookie(self.request))
+        items = extractitems(readcookie(self.request), self.request)
         if items:
             net = self.net(items)
             vat = self.vat(items)
@@ -203,7 +203,7 @@ class CartDataProviderBase(object):
     @property
     def total(self):
         total = Decimal(0)
-        items = extractitems(readcookie(self.request))
+        items = extractitems(readcookie(self.request), self.request)
         net = self.net(items)
         vat = self.vat(items)
         cart_discount = self.discount(items)
@@ -243,7 +243,7 @@ class CartDataProviderBase(object):
 
     @property
     def include_shipping_costs(self):
-        items = extractitems(readcookie(self.request))
+        items = extractitems(readcookie(self.request), self.request)
         for item in items:
             if cart_item_shippable(self.context, item):
                 return True
