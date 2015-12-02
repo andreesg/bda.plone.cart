@@ -211,7 +211,7 @@
                             $(this).attr('value', value);
                             $(this).val(value);
                         // case set element text
-                        else if (this.tagName.toUpperCase() == 'SELECT') {
+                        } else if (this.tagName.toUpperCase() == 'SELECT') {
                             $(this).find('option[value="' + value + '"]').attr("selected", "selected");
                         }
                         else {
