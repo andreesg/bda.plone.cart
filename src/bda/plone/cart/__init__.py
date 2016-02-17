@@ -32,6 +32,7 @@ import uuid
 
 _ = MessageFactory('bda.plone.cart')
 
+EU_COUNTRIES = ['040', '056', '100', '191', '203', '208', '233', '246', '250', '276', '300', '348', '372', '380', '428', '440', '442', '470', '620', '642', '703', '705', '724', '752', '826']
 
 CURRENCY_LITERALS = {
     'EUR': u"€",
@@ -145,9 +146,15 @@ class CartDataProviderBase(object):
     def __init__(self, context, request):
         self.context = context
         self.request = request
+        self.billing_country = ""
 
     @property
     def data(self):
+        try:
+            self.billing_country = self.request["billing_country"]
+        except:
+            self.billing_country = ""
+
         ret = dict()
         ret['cart_settings'] = dict()
         ret['cart_settings']['hide_cart_if_empty'] = self.hide_cart_if_empty
@@ -328,15 +335,32 @@ class CartDataProviderBase(object):
                                   u"``vat``.")
 
     def shipping(self, items):
+
         shippings = Shippings(self.context)
         shipping = shippings.get(self.shipping_method)
         try:
-            return {
-                'label': shipping.label,
-                'description': shipping.description,
-                'net': shipping.net(items),
-                'vat': shipping.vat(items),
-            }
+            if self.billing_country:
+                billing_type = ""
+                if self.billing_country == "528":
+                    billing_type = ""
+                elif self.billing_country in EU_COUNTRIES:
+                    billing_type = "eu"
+                else:
+                    billing_type = "non-eu"
+
+                return {
+                    'label': shipping.label,
+                    'description': shipping.description,
+                    'net': shipping.net(items, billing_type),
+                    'vat': shipping.vat(items, billing_type),
+                }
+            else:
+                return {
+                    'label': shipping.label,
+                    'description': shipping.description,
+                    'net': shipping.net(items),
+                    'vat': shipping.vat(items),
+                }
         # B/C for bda.plone.shipping < 0.4
         except NotImplementedError:
             return {

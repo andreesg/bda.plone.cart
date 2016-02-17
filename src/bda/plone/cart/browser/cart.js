@@ -734,6 +734,10 @@
             params.execution_context = CART_EXECUTION_CONTEXT;
         }
 
+        if ($("body.template-checkout #input-checkout-billing_address-country").length > 0) {
+            params.billing_country = $("#input-checkout-billing_address-country").val();
+        }
+
         bdajax.request({
             url: 'cartData',
             params: params,
