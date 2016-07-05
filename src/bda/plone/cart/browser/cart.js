@@ -404,11 +404,44 @@
                             var evt = $.Event('cart_modified');
                             evt.uid = defs[0];
                             evt.count = count;
+
                             $('*').trigger(evt);
+                            if (defs[1] == 0) {
+                                var raw_name = $(elem.parents(".cart_item")[0]).find('.cart_item_title');
+                                if (raw_name.length) {
+                                    name = $(raw_name[0]).text();
+                                } else {
+                                    name = evt.uid;
+                                }
+                                var raw_price = $(elem.parents(".cart_item")[0]).find('.cart_item_price');
+                                if (raw_price.length) {
+                                    var price = $(raw_price[0]).text();
+                                } else {
+                                    var price = "";
+                                }
+
+                                if (typeof dataLayer != 'undefined') {
+                                  dataLayer.push({
+                                    'event': 'removeFromCart',
+                                    'ecommerce': {
+                                      'currencyCode': 'EUR',
+                                      'remove': {
+                                        'products': [{
+                                          'name': name,
+                                          'price': price,
+                                          'quantity': 1
+                                         }]
+                                      }
+                                    }
+                                  });
+                                }
+                            }
                             if (status_message && defs[1] == 0) {
+                                
                                 cart.status_message(
                                     elem, cart.messages['cart_item_removed']);
                             } else if (status_message && defs[1] != 0) {
+
                                 cart.status_message(
                                     elem, cart.messages['cart_item_updated']);
                             }
@@ -527,6 +560,26 @@
                 }
                 var elem = $(this);
                 var status_message = elem.hasClass('show_status_message');
+
+                var name = $("#parent-fieldname-text-details h2").text();
+                var raw_price = $("dd.price h2").text();
+                var price = raw_price.replace("€ ", "");
+
+                if (typeof dataLayer != 'undefined') {
+                  dataLayer.push({
+                    'event': 'addToCart',
+                    'ecommerce': {
+                      'currencyCode': 'EUR',
+                      'add': {
+                        'products': [{
+                          'name': name,
+                          'price': price,
+                          'quantity': count
+                         }]
+                      }
+                    }
+                  });
+                }
 
                 bdajax.request({
                     url: 'validate_cart_item',
