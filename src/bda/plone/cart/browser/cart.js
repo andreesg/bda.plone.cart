@@ -420,7 +420,7 @@
                                     var price = "";
                                 }
 
-                                if (typeof dataLayer != 'undefined') {
+                                /*if (typeof dataLayer != 'undefined') {
                                   dataLayer.push({
                                     'event': 'removeFromCart',
                                     'ecommerce': {
@@ -434,7 +434,7 @@
                                       }
                                     }
                                   });
-                                }
+                                }*/
                             }
                             if (status_message && defs[1] == 0) {
                                 
@@ -565,7 +565,7 @@
                 var raw_price = $("dd.price h2").text();
                 var price = raw_price.replace("€ ", "");
 
-                if (typeof dataLayer != 'undefined') {
+                /*if (typeof dataLayer != 'undefined') {
                   dataLayer.push({
                     'event': 'addToCart',
                     'ecommerce': {
@@ -579,7 +579,7 @@
                       }
                     }
                   });
-                }
+                }*/
 
                 bdajax.request({
                     url: 'validate_cart_item',
