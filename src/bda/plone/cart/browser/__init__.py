@@ -17,6 +17,10 @@ from zope.i18n import translate
 from zope.i18nmessageid import MessageFactory
 from zope.interface import implementer
 import simplejson as json
+from plone.app.uuid.utils import uuidToCatalogBrain
+
+# Tickets
+from bda.plone.shop.utils import is_ticket as is_context_ticket
 
 
 _ = MessageFactory('bda.plone.cart')
@@ -157,13 +161,25 @@ class CartView(BrowserView, DataProviderMixin):
     def get_tickets_header(self, is_ticket):
         if is_ticket:
             folder = self.context
-            if folder.portal_type == "Folder":
-                contents = folder.getFolderContents({"portal_type": "Image", "Title":"tickets-header"})
-                if len(contents) > 0:
-                    image = contents[0]
-                    url = image.getURL()
-                    scale_url = "%s/%s" %(url, "@@images/image/large")
-                    return scale_url
+            if folder.portal_type in ["Folder", "Event"]:
+                if folder.portal_type == "Event":
+                    uuid = folder.UID()
+                    brain = uuidToCatalogBrain(uuid)
+                    if brain:
+                        leadmedia = getattr(brain, 'leadMedia', None)
+                        if leadmedia:
+                            image = uuidToCatalogBrain(leadmedia)
+                            if hasattr(image, 'getURL'):
+                                url = image.getURL()
+                                scale_url = "%s/%s" %(url, "@@images/image/large")
+                                return scale_url
+                else:
+                    contents = folder.getFolderContents({"portal_type": "Image", "Title":"tickets-header"})
+                    if len(contents) > 0:
+                        image = contents[0]
+                        url = image.getURL()
+                        scale_url = "%s/%s" %(url, "@@images/image/large")
+                        return scale_url
         else:
             brains = self.context.portal_catalog(Title="webwinkel-header", portal_type="Image")
             if len(brains) > 0:
@@ -174,6 +190,11 @@ class CartView(BrowserView, DataProviderMixin):
                     return scale_url
 
             return ""
+
+    def is_ticket(self):
+        ticket = is_context_ticket(self.context)
+        return ticket
+
 
     @property
     def disable_max_article(self):

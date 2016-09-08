@@ -24,8 +24,9 @@ from zope.interface import implementer
 from zope.publisher.interfaces.browser import IBrowserRequest
 
 ## TODO Changed
+#from bda.plone.shop.utils import is_ticket
+from plonetheme.museumbase.tickets import extractTickets, is_ticket
 
-from plonetheme.bootstrapModern.tickets import extractTickets
 
 import urllib2
 import uuid
@@ -183,6 +184,7 @@ class CartDataProviderBase(object):
             ret['cart_summary']['discount_total'] = '-' + ascur(discount_total)
             ret['cart_summary']['discount_total_raw'] = discount_total
             total = net + vat - discount_total
+
             if include_shipping_costs:
                 shipping = self.shipping(items)
                 total += shipping['net'] + shipping['vat']
@@ -250,6 +252,9 @@ class CartDataProviderBase(object):
 
     @property
     def include_shipping_costs(self):
+        if is_ticket(self.context):
+            return False
+
         items = extractitems(readcookie(self.request), self.request)
         for item in items:
             if cart_item_shippable(self.context, item):
