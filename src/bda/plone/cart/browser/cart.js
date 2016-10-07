@@ -117,6 +117,7 @@
     }
 
     Cart.prototype.render = function(data) {
+        this.separators = 0;
         this.cart_max_article_count = data.cart_settings.cart_max_article_count;
         if (data.cart_items.length == 0) {
             if (!data.cart_settings.hide_cart_if_empty) {
