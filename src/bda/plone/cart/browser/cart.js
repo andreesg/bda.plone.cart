@@ -239,7 +239,7 @@
                 }
                 if (this.separators == 1) {
                     var separator_item = $(this.separator_template).clone();
-                    $('#cart_items', this.cart_node).append(cart_item);
+                    $('#cart_items', this.cart_node).append(separator_item);
                 }
                 $('#cart_items', this.cart_node).append(cart_item);
             }
