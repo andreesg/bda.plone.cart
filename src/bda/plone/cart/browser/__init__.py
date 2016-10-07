@@ -131,7 +131,7 @@ class CartView(BrowserView, DataProviderMixin):
     def get_pre_cart(self, is_ticket):
         if is_ticket:
             folder = self.context
-            if folder.portal_type == "Folder":
+            if folder.portal_type in ["Folder", "Event"]:
                 contents = folder.getFolderContents({"portal_type": "Document", "Title":"pre-cart"})
                 if len(contents) > 0:
                     pre_cart = contents[0]
@@ -146,7 +146,7 @@ class CartView(BrowserView, DataProviderMixin):
     def get_post_cart(self, is_ticket):
         if is_ticket:
             folder = self.context
-            if folder.portal_type == "Folder":
+            if folder.portal_type in ["Folder", "Event"]:
                 contents = folder.getFolderContents({"portal_type": "Document", "Title":"post-cart"})
                 if len(contents) > 0:
                     post_cart = contents[0]
