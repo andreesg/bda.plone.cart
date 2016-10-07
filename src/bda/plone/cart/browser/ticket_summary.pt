@@ -37,8 +37,8 @@
       </tr>
     </thead>
     <tbody>
-    <tr class="separator_template" style="padding-left:0px;padding-right:0px;padding-top:50px;">
-      <td class="pre-cart"><h3>Aanvullende tickets(s)</h3></td>
+    <tr class="separator_template">
+      <td class="pre-cart" style="padding-left:0px;padding-right:0px;padding-top:50px;"><h3>Aanvullende tickets(s)</h3></td>
       <td></td>
       <td class="quantity-col"></td>
       <td class="subtotal-col"></td>
