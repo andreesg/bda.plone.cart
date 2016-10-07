@@ -26,6 +26,14 @@
 <span style="display:none;"
         class="cart_execution_context">summary</span>
 
+<span id="separator_template" style="display:none">
+  <tr class="separator_template">
+    <td class="pre-cart"><h3>Aanvullende tickets(s)</h3></td>
+    <td></td>
+    <td class="quantity-col"></td>
+    <td class="subtotal-col"></td>
+  </tr>
+</span>
 
 <span id="cart_item_template" style="display:none"
   tal:define="currency view/currency">
