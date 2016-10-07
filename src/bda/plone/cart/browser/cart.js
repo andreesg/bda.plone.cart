@@ -55,7 +55,7 @@
         this.item_template = $($('.cart_item').get(0)).clone();
         $('#card_item_template').remove();
         this.separator_template = $($('.separator_template').get(0)).clone();
-        $('#separator_template').remove();
+        $('#separato_template').remove();
     }
 
     Cart.prototype.add = function(uid, count, comment) {
@@ -192,7 +192,7 @@
                     }
 
                     if (item == "cart_item_title") {
-                        if (value.indexOf("Entree") !== -1) {
+                        if (value.indexOf("Entree") != -1) {
                             separators = separators + 1;
                         }
                     }
