@@ -23,6 +23,31 @@
     <p tal:content="structure python: pre_cart_text.output_relative_to(context.view)"></p>
   </div>
 
+<style>
+#cart.cart_tickets .pre-cart p:not(:first-child):not(:last-child) {
+	padding-bottom: 35px !important;
+}
+#content li {
+	word-wrap: break-word !important;
+}
+
+@media(max-width: 480px) {
+	#cart .cart-select-box:after, div.buyable .cart-select-box:after {
+		right: 10px !important;
+	}
+
+	#cart select, div.buyable select {
+		width: 45px !important;
+		padding: 7px 12px !important;
+	}
+
+	.template-cart #cart .cart_item_content span:not(.price), .template-etickets #cart .cart_item_content span:not(.price), #cart .cart_item_content span:not(.price) {
+    		font-size: 0.800em !important;
+		line-height: 22px;
+	}
+}
+</style>
+
 <span style="display:none;"
         class="cart_execution_context">summary</span>
 
@@ -38,7 +63,8 @@
     </thead>
     <tbody>
     <tr class="separator_template">
-      <td class="pre-cart" style="padding-left:0px;padding-right:0px;padding-top:50px;"><h3>Aanvullende tickets(s)</h3></td>
+      <td class="pre-cart" style="padding-left:0px;padding-right:0px;padding-top:50px;"><h3 tal:condition="python: getattr(context, 'language', None) == 'en'">Additional ticket(s): museum admission</h3>
+<h3 tal:condition="python: getattr(context, 'language', None) == 'nl'">Aanvullende ticket(s): museumentree</h3></td>
       <td></td>
       <td class="quantity-col"></td>
       <td class="subtotal-col"></td>

@@ -192,7 +192,7 @@
                     }
 
                     if (item == "cart_item_title") {
-                        if (value.indexOf("Entree") != -1) {
+                        if (value.indexOf("Entree") != -1 || value.indexOf("Entrance") != -1) {
                             this.separators = this.separators + 1;
                         }
                     }
