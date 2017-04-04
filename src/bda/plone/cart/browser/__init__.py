@@ -116,7 +116,48 @@ class CartMixin(DataProviderMixin):
 
 class CartView(BrowserView, DataProviderMixin):
     # XXX: rename to CartSummary
+    def get_pre_cart(self, is_ticket):
+        if is_ticket:
+            folder = self.context
+            if folder.portal_type in ["Folder", "Event"]:
+                contents = folder.getFolderContents({"portal_type": "Document", "Title":"pre-cart"})
+                if len(contents) > 0:
+                    pre_cart = contents[0]
+                    pre_cart_page = pre_cart.getObject()
+                    if hasattr(pre_cart_page, "text"):
+                        return pre_cart_page.text
 
+            return False
+        else:
+            return False
+
+    def get_post_cart(self, is_ticket):
+        if is_ticket:
+            folder = self.context
+            if folder.portal_type in ["Folder", "Event"]:
+                contents = folder.getFolderContents({"portal_type": "Document", "Title":"post-cart"})
+                if len(contents) > 0:
+                    post_cart = contents[0]
+                    post_cart_page = post_cart.getObject()
+                    if hasattr(post_cart_page, "text"):
+                        return post_cart_page.text
+
+            return False
+        else:
+            return False
+
+    def get_extra_tickets_text(self):
+        folder = self.context
+        if folder.portal_type in ["Folder", "Event"]:
+            contents = folder.getFolderContents({"portal_type": "Document", "Title":"extra-tickets-text"})
+            if len(contents) > 0:
+                extra_text = contents[0]
+                extra_text_page = extra_text.getObject()
+                if hasattr(extra_text_page, "text"):
+                    return extra_text_page.text
+
+        return False
+            
     @property
     def context_url(self):
         return self.context.absolute_url()
@@ -151,13 +192,21 @@ class CartView(BrowserView, DataProviderMixin):
 class CartDataView(BrowserView, DataProviderMixin):
 
     def validate_cart_item(self):
+        ret = dict()
+        provider = self.data_provider
+        if self.request.form.get('reset_uid', None):
+            reset_uid = self.request.form.get('reset_uid')
+            count = 0
+            ret = provider.validate_set(reset_uid)
+            if ret['success']:
+                ret = provider.validate_count(reset_uid, count)
+
         uid = self.request.form.get('uid')
         count = Decimal(self.request.form.get('count'))
-        provider = self.data_provider
-        ret = dict()
         ret = provider.validate_set(uid)
         if ret['success']:
             ret = provider.validate_count(uid, count)
+
         return json.dumps(ret)
 
     def cartData(self):

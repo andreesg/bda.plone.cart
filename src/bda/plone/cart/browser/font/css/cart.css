@@ -77,3 +77,18 @@
 .icon-up-open:before { content: '\e813'; } /* '' */
 .icon-down-open-mini:before { content: '\e814'; } /* '' */
 .icon-bag:before { content: '\e815'; } /* '' */
+
+
+/* Custom */
+.cart-table {
+  padding-top: 50px;
+}
+
+
+
+
+
+
+
+
+

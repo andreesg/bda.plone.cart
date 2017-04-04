@@ -297,4 +297,410 @@ img.cart_item_preview_image {
   content: '\e815';
   margin-right: 0.5em;
 }
+
+
+.cart-table {
+  padding-top: 20px;
+}
+
+.cart-table table {
+  border: 0px !important;
+}
+
+.cart-table td {
+  text-align: left;
+}
+
+.cart-table table > thead > tr > th {
+  border:0px;
+}
+
+.cart-table table > thead > tr > th {
+  border:0px;
+}
+
+.cart-table table > thead > tr > th, 
+.cart-table table > tbody > tr > th, 
+.cart-table table > tfoot > tr > th, 
+.cart-table table > thead > tr > td, 
+.cart-table table > tbody > tr > td, 
+.cart-table table > tfoot > tr > td {
+  border:0px;
+}
+
+.cart-table select.cart_item_count {
+  width: 100%;
+}
+
+.cart-table th.subtotal-th,
+.cart-table td.subtotal-col {
+  text-align: right;
+}
+
+.cart-table h3 {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.cart-table table > thead > tr > th, 
+.cart-table table > tbody > tr > th, 
+.cart-table table > tfoot > tr > th, 
+.cart-table table > thead > tr > td, 
+.cart-table table > tbody > tr > td, 
+.cart-table table > tfoot > tr > td {
+  padding: 15px;
+}
+
+#form-checkout h2:first-child {
+    display: none !important;
+}
+
+#field-checkout-personal_data-company {
+  display: none;
+}
+
+#field-checkout-personal_data-woonplaats {
+  display: none;
+}
+
+#form-checkout.mode_edit {
+  padding-top: 40px;
+}
+
+#tag-checkout-payment_selection-heading {
+  display: none;
+}
+
+#field-checkout-payment_selection-payment {
+  display: none;
+}
+
+#field-checkout-personal_data-country {
+  clear: both;
+}
+
+#field-checkout-personal_data-phone {
+  clear: both;
+}
+
+#input-checkout-personal_data-country {
+  width: 100%;
+}
+
+#input-checkout-personal_data-email {
+  width: 100%;
+}
+
+#input-checkout-personal_data-phone {
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  #input-checkout-personal_data-country {
+    width: 434px;
+  }
+
+  #input-checkout-personal_data-email, #input-checkout-personal_data-phone {
+    width: 434px;
+  }
+}
+
+#form-checkout h2 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.25em;
+    border-bottom: 0.1em solid #bbb;
+}
+
+#input-checkout-next, #input-checkout-finish {
+  float: none;
+  margin-left: 1em;
+}
+
+label[for='input-checkout-payment_method_selection-payment_method-ideal'] {
+    height: 40px;
+    background-image: url(http://teylersmuseum-stage.intk.com/++resource++plonetheme.museumbase.css/payment_icons.png);
+    background-repeat: no-repeat;
+    background-position: 25px -69px;
+}
+
+label[for='input-checkout-payment_method_selection-payment_method-creditcard'] {
+    height: 40px;
+    background-image: url(http://teylersmuseum-stage.intk.com/++resource++plonetheme.museumbase.css/payment_icons.png);
+    background-repeat: no-repeat;
+    background-position: 25px -227px;
+}
+
+#input-checkout-payment_method_selection-payment_method-creditcard {
+    margin-right: 65px !important;
+    vertical-align: middle;
+    height: auto;
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+
+
+#input-checkout-payment_method_selection-payment_method-ideal {
+    margin-right: 65px !important;
+    vertical-align: middle;
+    height: auto;
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+
+#form-checkout .cart_item.disable {
+  display: none;
+}
+
+.template-checkout .mode_display .checkout_cart_overview {
+    border: 0px solid #e5e5e5;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    box-shadow: none;
+    padding: 0;
+    background: none;
+}
+
+#content div.tickets-breadcrumbs a.btn.selected {
+    background: #666666 !important;
+    cursor: pointer;
+    pointer-events: none;
+    color: #e5e5e5;
+}
+
+body.template-checkout article#content {
+  padding-top: 30px;
+}
+
+body.template-etickets #content-header,
+body.template-etickets #above-content-wrapper,
+body.template-etickets #mainnavigation-wrapper,
+body.template-etickets #content > h1.documentFirstHeading,
+body.template-etickets #portal-footer-wrapper {
+  display: none;
+}
+
+body.template-etickets {
+  background: #ffffff;
+}
+
+body.template-etickets #ticket-footer,
+body.template-etickets #ticket-header {
+  padding: 15px;
+}
+
+body.template-etickets td.ticket-info {
+  width: 50%;
+}
+
+body.template-etickets .summary_item {
+  border-bottom: 0px;
+}
+
+body.template-etickets #ticket-footer > div {
+  padding-top: 10px;
+}
+
+body.template-etickets table {
+  color: #4d4d4d;
+  font-weight: 500;
+}
+
+body.template-etickets h5 {
+  font-weight: 500;
+}
+
+body.template-etickets .tickets-title h1 {
+  margin-top: 0px;
+}
+
+body.template-etickets #ticket-header {
+}
+
+body.template-etickets .portletCalendar {
+  display: none !important;
+}
+
+
+
+.ticket-item {
+  padding-top: 20px;
+}
+
+.ticket-item table {
+  border: 0px !important;
+}
+
+.ticket-item td {
+  text-align: left;
+}
+
+.ticket-item table > thead > tr > th {
+  border:0px;
+}
+
+.ticket-item table > thead > tr > th {
+  border:0px;
+}
+
+.ticket-item table > thead > tr > th, 
+.ticket-item table > tbody > tr > th, 
+.ticket-item table > tfoot > tr > th, 
+.ticket-item table > thead > tr > td, 
+.ticket-item table > tbody > tr > td, 
+.ticket-item table > tfoot > tr > td {
+  border:0px;
+}
+
+.ticket-item select.cart_item_count {
+  width: 50%;
+}
+
+.ticket-item th.subtotal-th,
+.ticket-item td.subtotal-col {
+  text-align: right;
+}
+
+.ticket-item h3 {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.ticket-item table > thead > tr > th, 
+.ticket-item table > tbody > tr > th, 
+.ticket-item table > tfoot > tr > th, 
+.ticket-item table > thead > tr > td, 
+.ticket-item table > tbody > tr > td, 
+.ticket-item table > tfoot > tr > td {
+  padding: 15px;
+}
+
+.separator_template {
+  background: #fafafa;
+}
+
+.separator_template h3 {
+  color: #4d4d4d;
+}
+
+.cart-header th > h4 {
+  color: #4d4d4d;
+  font-weight: 500;
+}
+
+body.template-cart h4 {
+  font-size: 16px;
+}
+
+body.template-cart .portletCalendar {
+  display: none;
+}
+
+/*.template-cart .sidebar-offcanvas {
+  display: none;
+}
+
+.template-cart #main-container > .col-sm-9 {
+  width: 100%;
+}*/
+
+.event-listing h1 {
+  display: none !important;
+}
+
+.event-listing .cal_date {
+  display: none !important;
+}
+
+.event-listing div.cal_info {
+  margin-left: 0px !important;
+}
+
+.event-listing h2 {
+  font-size: 15px;
+  margin-top: 0px;
+}
+
+.event-listing li.category,
+.event-listing .event_ical {
+  display: none !important;
+}
+
+.ploneCalendar td.today {
+    background-color: #eee;
+    border-color: #eee;
+}
+
+
+.ploneCalendar td.today.selected {
+    background-color: white;
+    border-color: #205C90;
+}
+
+
+/* Timeslots */
+.table-time .time-free {
+    color: #7ED321;
+}
+
+.table-time .time-row {
+    margin-top: -1px;
+    margin-right: -1px;
+    border: 1px solid #E7E7E7 !important;
+    padding: 10px 0;
+    text-align: center;
+    cursor: pointer;
+    width: 33%;
+    float: left;
+    text-decoration: none;
+}
+
+.portletCalendar a.time-row:hover,
+.portletCalendar a.time-row:active,
+.portletCalendar a.time-row:focus {
+  border: 1px solid #E7E7E7 !important;
+}
+
+.portletCalendar a.time-row:not(.time-ua):focus {
+  color: #7ED321 !important;
+}
+
+.table-time {
+    overflow: hidden;
+    width: 100%;
+    padding: 1px 0 0 0;
+}
+
+.table-time .time-active {
+    background: #007C92 !important;
+    color: #FFF !important;
+}
+
+.table-time .time-ua {
+    color: #E7E7E7 !important;
+    cursor: default !important;
+}
+
+.recurrent-event.disable {
+  display: none !important;
+}
+
+
+body.template-mollie_payment_success .portletCalendar {
+  display: none !important;
+}
+
+td.type-ticket-td {
+  width: 80%;
+}
+
+body.template-checkout .portletCalendar {
+  display: none !important;
+}
+
+
+
+
+
+
 /*# sourceMappingURL=++resource++bda.plone.cart.css.map */

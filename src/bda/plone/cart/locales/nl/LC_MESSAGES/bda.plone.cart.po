@@ -193,3 +193,10 @@ msgstr "Het gewenste aantal is niet beschikbaar"
 #: ./browser/tile.pt:25
 msgid "update_cart"
 msgstr "Winkelwagen bijwerken"
+
+
+
+
+
+
+

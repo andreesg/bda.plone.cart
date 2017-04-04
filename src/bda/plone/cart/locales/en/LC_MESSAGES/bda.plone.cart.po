@@ -191,3 +191,316 @@ msgstr "Not enough items available, abort."
 #: ./browser/tile.pt:25
 msgid "update_cart"
 msgstr "Update cart"
+
+#. Default: "Tickets"
+#: ./browser/summary.pt:28
+#: ./browser/tile.pt:25
+msgid "step_tickets"
+msgstr "1. Tickets"
+
+#. Default: "Details"
+#: ./browser/summary.pt:28
+#: ./browser/tile.pt:25
+msgid "step_details"
+msgstr "2. Person details"
+
+#. Default: "Verify details"
+#: ./browser/summary.pt:28
+#: ./browser/tile.pt:25
+msgid "step_details_control"
+msgstr "3. Verify details"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "step_details_payment"
+msgstr "4. Payment"
+
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "type_ticket"
+msgstr "Ticket type"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "quantity"
+msgstr "Amount"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "subtotal"
+msgstr "Subtotal"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "extra_tickets"
+msgstr "Additional ticket(s)"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "thanks_order"
+msgstr "Thank you very much for your order!"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "your_order"
+msgstr "Your order"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "order_success"
+msgstr "was completed successfully."
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "email_confirmation"
+msgstr "Within minutes you will receive an email with the order confirmation and your e-ticket(s) in the attachment."
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "check_spam"
+msgstr "Please check your spam and junk email folder if you have not received the email."
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "ticket_entrance"
+msgstr "Entrance ticket"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "ticket_event"
+msgstr "Event"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "info_0"
+msgstr "This ticket is valid during the Watteau exhibition: from February 1st until May 14."
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "info_1"
+msgstr "This ticket is not redeemable for cash and will be scanned at the entrance of the museum"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "info_2"
+msgstr "The general conditions for visitors apply to this e-ticket. See: www.teylersmuseum.nl"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "info_3"
+msgstr "For extradorinary exhibitions, Teylers Museum may require a small fee to cover the costs for the exhibition. This fee is not included in this e-ticket. We kindly ask you to pay the fee at the cash desk when you arrive. Most exhibitions can be visited without charge. In case a small fee is required, this will always be clearly stated at our website."
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "info_4"
+msgstr "For extradorinary exhibitions, Teylers Museum may require a small fee to cover the costs for the exhibition. This fee is not included in this e-ticket. We kindly ask you to pay the fee at the cash desk when you arrive. Most exhibitions can be visited without charge. In case a small fee is required, this will always be clearly stated at our website."
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "date"
+msgstr "Datum"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "client_name"
+msgstr "Customer name"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "ticketnumber"
+msgstr "Ticket number"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "purchase_date"
+msgstr "Date of purchase"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "address"
+msgstr "Address"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "opening_hours"
+msgstr "Opening hours"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "opening_hours_details"
+msgstr "Tuesdays to Fridays: 10 a.m - 5 p.m. Saturdays, Sundays, public holidays: 11 a.m. – 5 p.m. Please note that during public holidays, opening hours may differ from the regular opening times. Please check the opening hours before your visit on:"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "accessibility_header"
+msgstr "How to find us"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "accessibility_text"
+msgstr "Teylers Museum is easy to reach by car and train. If you come by train: the museum is on a 10 minutes walk from Haarlem Central Station. Take the following route; Jansweg, Jansstraat, turn left into Korte Jansstraat, turn right into Bakenessergracht, straight on to the end, turn right at the S paarne River, Teylers Museum will be on your right. If you come by car: multi-storey carpark De Appelaar is located next to the museum."
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "payment_success"
+msgstr "Payment Success"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "calendar_pre_text"
+msgstr "When would you like to visit the Lorentz Lab?"
+
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "your_order"
+msgstr "Your order"
+
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "info_1_lorentz"
+msgstr "Follow the footsteps of Professor Einstein and Lorentz when visiting the Lorentz Lab!"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "info_2_lorentz"
+msgstr ""
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "info_3_lorentz"
+msgstr "This ticket is only valid on the date/time indicated above"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "info_4_lorentz"
+msgstr "This ticket is not redeemable for cash or for a ticket at a later time"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "info_5_lorentz"
+msgstr "The general conditions for visitors aplpy to this ticket. See: www.teylersmuseum.nl."
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "opening_hours_lorentz_header"
+msgstr "Information before you visit"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "opening_1_lorentz"
+msgstr "Thanks for booking your Lorentz Lab Tour. Upon arrival, please show this ticket at the cash register to receive your final ticket for participation."
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "opening_2_lorentz"
+msgstr "We recommend to be well on time, at least 15 minutes before the start of the Tour. Access is not possible after the Tour has started. There will be no refund of the booking fee."
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "opening_3_lorentz"
+msgstr "This ticket for the Lorentz Lab Tour is not a ticket for the museum. In case you don't have a museum ticket yet, you can buy it online or on the day itself at the cash register - in case of the latter, please consider queue time."
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "opening_4_lorentz"
+msgstr "Please be aware of our opening hours: Tuesdays to Fridays: 10 a.m. - 5 p.m. Saturdays, Sundays and public holidays: 11 a.m. - 5 p.m. During public holidays different opening hours may apply. Check our website for current opening hours."
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "accessibility_header_lorentz"
+msgstr "Accessibility"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "accessibility_1_lorentz"
+msgstr "Teylers Museum is easy to reach by car and train. If you come by train: the museum is on a 10 minutes walk from Haarlem Central Station. If you come by car: multi-storey carpark De Appelaar is located next to the museum."
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "accessibility_2_lorentz"
+msgstr "The Lorentz Lab is a historic building that gives a glimpse back in time. Facilities are made to match the standards of current times in the best possible way with respect for the original architecture."
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "payment_error"
+msgstr "Something went wrong"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "verification_failed"
+msgstr "Oops, something went wrong. Your tickets have not been payed because the payment verification failed. We're sorry for the inconvenience. Please try again to order your tickets, or contact us if you think the problem is on our side:"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "contact_us"
+msgstr "Contact us"
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "ordernumber"
+msgstr "Order number"
+
+
+#. Default: "Test"
+#: ./browser/test.pt:28
+#: ./browser/test.pt:25
+msgid "address_times"
+msgstr "Mo-Fri, 8.30 am - 16 pm"
+
+
+
+
+
+
+
+
+

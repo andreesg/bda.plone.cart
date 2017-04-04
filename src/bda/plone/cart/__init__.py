@@ -23,12 +23,16 @@ from zope.interface import implementer
 from zope.interface import Interface
 from zope.publisher.interfaces.browser import IBrowserRequest
 from plone import api
+from plone.app.uuid.utils import uuidToCatalogBrain
+from Acquisition import aq_parent
 
 import urllib2
 import uuid
 
 
 _ = MessageFactory('bda.plone.cart')
+
+EU_COUNTRIES = ['040', '056', '100', '191', '203', '208', '233', '246', '250', '276', '300', '348', '372', '380', '428', '440', '442', '470', '620', '642', '703', '705', '724', '752', '826']
 
 
 CURRENCY_LITERALS = {
@@ -45,6 +49,140 @@ CURRENCY_LITERALS = {
     'YEN': u"¥",
     'NZD': u"$",
 }
+
+RawCartItem = namedtuple('RawCartItem', ['uid', 'count', 'comment'])
+
+ALLOWED_TYPES_TICKETS = ['Event', 'BookableEvent', 'Ticket']
+
+
+
+""" CUSTOM TICKETS """
+def is_ticket(context):
+    if context:
+        if "/tickets" in context.absolute_url():
+            return True
+
+        if context.portal_type in ALLOWED_TYPES_TICKETS:
+            physical_path = context.getPhysicalPath()
+            path = "/".join(physical_path)
+
+            if 'ticket' in context.Subject:
+                return True
+
+            results = context.portal_catalog(path={'query': path, 'depth': 1}, portal_type="product", Subject="ticket")
+            if len(results) > 0:
+                return True
+
+        return False
+    else:
+        return False
+
+
+def find_context(request):
+    published = request.get('PUBLISHED', None)
+    context = getattr(published, '__parent__', None)
+    if context is None:
+        context = request.PARENTS[0]
+    return context
+
+def find_tickets(context):
+    from bda.plone.ticketshop.interfaces import ITicketOccurrenceData
+    from bda.plone.ticketshop.interfaces import IBuyableEvent
+    
+    catalog = context.portal_catalog
+    physical_path = context.getPhysicalPath()
+    path = "/".join(physical_path)
+
+    language = getattr(context, 'language', 'nl')
+
+    brains = catalog(portal_type=['product', 'Event'], sort_on='getObjPositionInParent', Subject="ticket", Language=language)
+
+    tickets = []
+    events = []
+
+    for brain in brains:
+        if brain.portal_type in ['Event']:
+            obj = brain.getObject()
+            if IBuyableEvent.providedBy(obj):
+                ocurrence_data = ITicketOccurrenceData(obj)
+                occ_tickets = ocurrence_data.tickets
+                events = events + [uuidToCatalogBrain(occ.UID()) for occ in occ_tickets]
+        else:
+            tickets.append(brain)
+
+    final_result = tickets + events
+    return final_result
+
+def add_tickets(ret, context):
+    tickets = find_tickets(context)
+
+    # Populate ticket ids
+    uids = []
+    for ticket in tickets:
+        uids.append(RawCartItem(ticket.UID, Decimal(0), ''))
+
+    occurrences = False
+    for uid, count, comment in ret:
+        item = uuidToCatalogBrain(uid)
+        if item.portal_type == "Ticket Occurrence":
+            occurrences = True
+
+    for uid, count, comment in ret:
+        found = False
+        for index, elem in enumerate(uids):
+            
+            if elem[0] == uid:
+                uids[index] = RawCartItem(uid, Decimal(count), comment)
+                found = True
+                break
+
+        if not found and Decimal(count) > 0:
+            uids.append(RawCartItem(uid, Decimal(count), comment))
+
+    """for index, elem in enumerate(uids):
+        item = uuidToCatalogBrain(elem[0])
+        if item.portal_type == "Ticket" and elem[1] == 0 and occurrences and "Museums" not in item.Title:
+            uids.pop(index)"""
+
+    last = None
+    for elem in uids:
+        if "Museums" in uuidToCatalogBrain(elem[0]).Title:
+            last = elem
+            uids.remove(elem)
+            break
+
+    if last:
+        uids.append(last)
+
+    return uids
+
+def remove_tickets(ret, context):
+    tickets = find_tickets(context)
+
+    uuids = []
+    for ticket in tickets:
+        uuids.append(ticket.UID)
+
+    new_ret = []
+
+    for item in ret:
+        if item[0] not in uuids:
+            new_ret.append(item)
+
+    return new_ret
+
+def extractTickets(ret, request):
+    if request != None:
+        context = find_context(request)
+
+        if is_ticket(context):
+            ret = add_tickets(ret, context)
+        else:
+            ret = remove_tickets(ret, context)
+
+    return ret
+""" CUSTOM TICKETS """
+
 
 
 def ascur(val, comma=False):
@@ -71,27 +209,35 @@ def deletecookie(request):
     request.response.expireCookie('cart', path='/')
 
 
-RawCartItem = namedtuple('RawCartItem', ['uid', 'count', 'comment'])
 
 
-def extractitems(items):
+def extractitems(items, request=None):
     """Cart items are stored in a cookie. The format is
     ``uid;comment:count,uid;comment:count,...``.
 
     Return a list of 3-tuples containing ``(uid, count, comment)``.
     """
     if not items:
-        return []
-    ret = list()
-    items = items.split(',')
-    for item in items:
-        if not item:
-            continue
-        item = item.split(':')
-        uid = item[0].split(';')[0]
-        count = item[1]
-        comment = urllib2.unquote(item[0][len(uid) + 1:])
-        ret.append(RawCartItem(uid, Decimal(count), comment))
+        items = ""
+
+    if items != "":
+        ret = list()
+        items = items.split(',')
+
+        for item in items:
+            if not item:
+                continue
+            item = item.split(':')
+            uid = item[0].split(';')[0]
+            count = item[1]
+            comment = urllib2.unquote(item[0][len(uid) + 1:])
+            ret.append(RawCartItem(uid, Decimal(count), comment))
+    else:
+        ret = list()
+
+    tickets_ret = extractTickets(ret, request)
+    ret = tickets_ret
+
     return ret
 
 
@@ -108,7 +254,7 @@ def aggregate_cart_item_count(target_uid, items):
 def remove_item_from_cart(request, uid):
     """Remove single item from cart by uid.
     """
-    items = extractitems(readcookie(request))
+    items = extractitems(readcookie(request), request)
     cookie_items = list()
     for item_uid, count, comment in items:
         if uid == item_uid:
@@ -165,7 +311,7 @@ class CartDataProviderBase(object):
         ret['cart_settings']['include_shipping_costs'] = include_shipping_costs
         ret['cart_items'] = list()
         ret['cart_summary'] = dict()
-        items = extractitems(readcookie(self.request))
+        items = extractitems(readcookie(self.request), self.request)
         if items:
             net = self.net(items)
             vat = self.vat(items)
@@ -208,7 +354,7 @@ class CartDataProviderBase(object):
     @property
     def total(self):
         total = Decimal(0)
-        items = extractitems(readcookie(self.request))
+        items = extractitems(readcookie(self.request), self.request)
         net = self.net(items)
         vat = self.vat(items)
         cart_discount = self.discount(items)
@@ -248,7 +394,7 @@ class CartDataProviderBase(object):
 
     @property
     def include_shipping_costs(self):
-        items = extractitems(readcookie(self.request))
+        items = extractitems(readcookie(self.request), self.request)
         for item in items:
             if cart_item_shippable(self.context, item):
                 return True
@@ -369,7 +515,8 @@ class CartDataProviderBase(object):
     def item(self, uid, title, count, price, url, comment='', description='',
              comment_required=False, quantity_unit_float=False,
              quantity_unit='', preview_image_url='',
-             no_longer_available=False, alert='', discount=Decimal(0)):
+             no_longer_available=False, alert='', discount=Decimal(0), original_price=''):
+        item_brain = uuidToCatalogBrain(uid)
         return {
             # placeholders
             'cart_item_uid': uid,
@@ -388,6 +535,8 @@ class CartDataProviderBase(object):
             'comment_required': comment_required,
             'quantity_unit_float': quantity_unit_float,
             'no_longer_available': no_longer_available,
+            'cart_item_original_price': ascur(original_price),
+            'cart_item_ticket': item_brain.portal_type in ["Ticket", "Ticket Occurrence"] and "Museums" not in item_brain.Title
         }
 
 
@@ -735,3 +884,7 @@ def get_object_by_uid(context, uid):
         return api.content.get(UID=uid)
     except ValueError:
         return None
+
+
+
+
